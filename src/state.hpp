@@ -9,18 +9,18 @@ struct ObjParams
 {
     const int id;
     const double mass;
-    const double diameter;
+    const double CS_coff;
     Eigen::Vector3d wind;
 
     static int counter;
 
-    ObjParams(double mass, double diameter):
-    id{counter++}, mass{mass}, diameter{diameter}, wind{Eigen::Vector3d()}
+    ObjParams(double mass, double CS_coff):
+    id{counter++}, mass{mass}, CS_coff{CS_coff}, wind{Eigen::Vector3d()}
     {   
     }
 
     ObjParams(ObjParams&& rhs)
-     : id{rhs.id}, mass{rhs.mass}, diameter{diameter}, wind{rhs.wind}
+     : id{rhs.id}, mass{rhs.mass}, CS_coff{CS_coff}, wind{rhs.wind}
     {
     }
 };
@@ -33,7 +33,7 @@ class State
         void updateState(Eigen::VectorXd newState);
         std::mutex stateMutex;
 
-        void addObj(double mass, double diameter, Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
+        void addObj(double mass, double CS_coff, Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
         void removeObj(int id);
         std::string to_string();
 

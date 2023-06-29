@@ -18,22 +18,12 @@ Simulation::Simulation()
     calcRHS();
     controlListener = std::thread([this]()
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        for (size_t i = 1; i < 5; i++)
-        {
             Eigen::Vector3d v;
-            v.setConstant(i);
-            addObj(i,i,v,v);
+            v.setConstant(3);
+            addObj(3,3,v,v);
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        }
-
-        removeObj(2);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        removeObj(0);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        removeObj(1);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     });
+    statePublishSocket = zmq::socket_t(_ctx, zmq::socket_type::pub);
 }
 
 void Simulation::run()
@@ -66,6 +56,17 @@ void Simulation::removeObj(int id)
     calcRHS();
 }
 
+Eigen::Vector3d Simulation::calcAerodynamicForce(Vector3d vel, ObjParams& params)
+{
+    Eigen::Vector3d diff = vel-params.wind;
+    double dynamic_pressure = 0.5*air_density*diff.dot(diff);
+    if(dynamic_pressure == 0.0)
+    {
+        return Eigen::Vector3d(0.0,0.0,0.0);
+    }
+    return -params.CS_coff*dynamic_pressure*diff.normalized();
+}
+
 void Simulation::calcRHS()
 {
     if(state.getNoObj() == 0)
@@ -76,21 +77,23 @@ void Simulation::calcRHS()
     RHS = [this] (double, Eigen::VectorXd local_state) 
         {
             int no = state.getNoObj();
-            VectorXd res(6*no);
+            Eigen::VectorXd res(6*no);
             res.segment(0,6*no - 3) = local_state.segment(3, 6*no-3);
             for (int i = 0; i < no; i++)
             {
                 ObjParams& p = state.getParams(i);
-                res.segment<3>(3+6*i) = (p.mass*gravity)/p.mass;
+                Eigen::Vector3d vel = local_state.segment<3>(3+6*i);
+                res.segment<3>(3+6*i) = (p.mass*gravity + calcAerodynamicForce(vel,p))/p.mass;
             }
             return res;
         };
-    std::cout << "setted" << std::endl;
 }
 
 void Simulation::sendState(std::string&& msg)
 {
     std::cout << msg << std::endl;
+    zmq::message_t message(msg.data(), msg.size());
+    statePublishSocket.send(message,zmq::send_flags::none);
 }
 
 Simulation::~Simulation()

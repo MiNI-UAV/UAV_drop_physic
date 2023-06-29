@@ -47,7 +47,7 @@ void State::removeObj(int id) {
 
 std::string State::to_string()
 {
-    static Eigen::IOFormat commaFormat(3, Eigen::DontAlignCols," ",",","","",",",";");
+    static Eigen::IOFormat commaFormat(6, Eigen::DontAlignCols," ",",","","",",",";");
     std::string msg;
     msg.reserve((noObj*60 + 100));
     msg += std::to_string(real_time);
@@ -58,7 +58,6 @@ std::string State::to_string()
         std::stringstream ss;
         ss << state.segment<6>(6*i).format(commaFormat);
         msg += ss.str();
-        msg.push_back(';');
     }
     return msg;
 }

@@ -21,12 +21,15 @@ class Simulation
     private:
         const double step_time = 0.01;
         const Eigen::Vector3d gravity = Eigen::Vector3d(0.0,0.0,9.81);
+        const double air_density = 1.204;
 
         zmq::context_t _ctx;
         State state;
         std::function<Eigen::VectorXd(double,Eigen::VectorXd)> RHS;
         std::thread controlListener;
+        zmq::socket_t statePublishSocket;
 
         void sendState(std::string&& msg);
         void calcRHS();
+        Eigen::Vector3d calcAerodynamicForce(Eigen::Vector3d vel, ObjParams& params);
 };
