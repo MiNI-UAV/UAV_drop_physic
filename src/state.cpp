@@ -24,6 +24,12 @@ void State::updateState(Eigen::VectorXd newState) {
     }
 }
 
+void State::updateWind(int id, Eigen::Vector3d newWind) {
+    auto iter = std::find_if(obj_params.begin(),obj_params.end(),[id](std::unique_ptr<ObjParams>& o) {return o->id == id;});
+    if(iter == obj_params.end()) return;
+    iter->get()->wind = newWind;
+}
+
 void State::addObj(double mass, double diameter, Eigen::Vector3d pos,
                    Eigen::Vector3d vel) 
 {

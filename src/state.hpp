@@ -31,6 +31,7 @@ class State
         State();
         Eigen::VectorXd getState();
         void updateState(Eigen::VectorXd newState);
+        void updateWind(int id, Eigen::Vector3d newWind);
         std::mutex stateMutex;
 
         void addObj(double mass, double CS_coff, Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());

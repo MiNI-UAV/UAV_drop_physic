@@ -12,9 +12,12 @@ class Simulation
         ~Simulation();
         void run();
 
-        void addObj(double mass, double diameter,
+        void addObj(double mass, double CS,
             Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
         void removeObj(int id);
+
+        void addCommand(std::string msg, zmq::socket_t& sock);
+        void updateWind(std::string msg, zmq::socket_t& sock);
 
 
 
@@ -22,6 +25,7 @@ class Simulation
         const double step_time = 0.01;
         const Eigen::Vector3d gravity = Eigen::Vector3d(0.0,0.0,9.81);
         const double air_density = 1.204;
+        const std::string path = "ipc:///tmp/drop_shot";
 
         zmq::context_t _ctx;
         State state;
