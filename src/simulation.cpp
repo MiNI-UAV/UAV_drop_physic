@@ -15,7 +15,25 @@
 
 Simulation::Simulation()
 {
-    RHS = [] (double, Eigen::VectorXd) {return Eigen::VectorXd();};
+    calcRHS();
+    controlListener = std::thread([this]()
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        for (size_t i = 1; i < 5; i++)
+        {
+            Eigen::Vector3d v;
+            v.setConstant(i);
+            addObj(i,i,v,v);
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        }
+
+        removeObj(2);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        removeObj(0);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        removeObj(1);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    });
 }
 
 void Simulation::run()
@@ -24,10 +42,10 @@ void Simulation::run()
         std::unique_lock<std::mutex> lock(state.stateMutex);
         Eigen::VectorXd next = RK4_step(state.real_time,state.getState(),RHS,step_time);
         state.updateState(next);
-        double next_time = state.real_time + step_time;
-        state.real_time = next_time;
+        state.real_time += step_time;
+        auto msg = state.to_string();
         lock.unlock();
-        sendState(next_time,next);
+        sendState(std::move(msg));
     }, state.status);
 
     loop.go();
@@ -41,36 +59,41 @@ void Simulation::addObj(double mass, double diameter,
     calcRHS();
 }
 
-void Simulation::removeObj(int index)
+void Simulation::removeObj(int id)
 {
     const std::lock_guard<std::mutex> lock(state.stateMutex);
-    state.removeObj(index);
+    state.removeObj(id);
     calcRHS();
 }
 
 void Simulation::calcRHS()
 {
+    if(state.getNoObj() == 0)
+    {
+        RHS = [] (double, Eigen::VectorXd) {return VectorXd();};
+        return;
+    }
     RHS = [this] (double, Eigen::VectorXd local_state) 
         {
             int no = state.getNoObj();
             VectorXd res(6*no);
-            res.segment(0,6*no - 3) = local_state.segment(3, 6*no);
+            res.segment(0,6*no - 3) = local_state.segment(3, 6*no-3);
             for (int i = 0; i < no; i++)
             {
-                ObjParams p = state.getParams(i);
+                ObjParams& p = state.getParams(i);
                 res.segment<3>(3+6*i) = (p.mass*gravity)/p.mass;
             }
-            
             return res;
         };
+    std::cout << "setted" << std::endl;
 }
 
-void Simulation::sendState(double time, Eigen::VectorXd state)
+void Simulation::sendState(std::string&& msg)
 {
-    std::cout << time << std::endl << state << std::endl;  
+    std::cout << msg << std::endl;
 }
 
 Simulation::~Simulation()
 {
-
+    controlListener.join();
 }

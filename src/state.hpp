@@ -7,8 +7,22 @@
 
 struct ObjParams
 {
-    double mass;
-    double diameter;
+    const int id;
+    const double mass;
+    const double diameter;
+    Eigen::Vector3d wind;
+
+    static int counter;
+
+    ObjParams(double mass, double diameter):
+    id{counter++}, mass{mass}, diameter{diameter}, wind{Eigen::Vector3d()}
+    {   
+    }
+
+    ObjParams(ObjParams&& rhs)
+     : id{rhs.id}, mass{rhs.mass}, diameter{diameter}, wind{rhs.wind}
+    {
+    }
 };
 
 class State
@@ -20,10 +34,11 @@ class State
         std::mutex stateMutex;
 
         void addObj(double mass, double diameter, Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
-        void removeObj(int index);
+        void removeObj(int id);
+        std::string to_string();
 
         inline int getNoObj() {return noObj;}
-        inline ObjParams getParams(int index) {return obj_params[index];}
+        inline ObjParams& getParams(int index) {return *obj_params[index];}
         inline Eigen::Vector3d getPos(int index) {return state.segment<3>(6*index);}
         inline Eigen::Vector3d getVel(int index) {return state.segment<3>(3+6*index);}
 
@@ -34,6 +49,6 @@ class State
     private:
         int noObj;
         Eigen::VectorXd state;
-        std::vector<ObjParams> obj_params;
+        std::vector<std::unique_ptr<ObjParams>> obj_params;
        
 };

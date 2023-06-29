@@ -14,7 +14,7 @@ class Simulation
 
         void addObj(double mass, double diameter,
             Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
-        void removeObj(int index);
+        void removeObj(int id);
 
 
 
@@ -25,7 +25,8 @@ class Simulation
         zmq::context_t _ctx;
         State state;
         std::function<Eigen::VectorXd(double,Eigen::VectorXd)> RHS;
+        std::thread controlListener;
 
-        void sendState(double time, Eigen::VectorXd state);
+        void sendState(std::string&& msg);
         void calcRHS();
 };

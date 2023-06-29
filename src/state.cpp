@@ -2,6 +2,8 @@
 #include "state.hpp"
 #include "status.hpp"
 
+int ObjParams::counter = 0;
+
 State::State()
 {
     status = Status::running;
@@ -25,20 +27,38 @@ void State::updateState(Eigen::VectorXd newState) {
 void State::addObj(double mass, double diameter, Eigen::Vector3d pos,
                    Eigen::Vector3d vel) 
 {
-    //const std::lock_guard<std::mutex> lock(stateMutex);
-    obj_params.push_back(ObjParams{mass,diameter});
+    obj_params.push_back(std::make_unique<ObjParams>(mass,diameter));
     noObj++;
     Eigen::VectorXd newState(state.size() + 6);
     newState << state, pos, vel;
     state = newState;
 }
 
-void State::removeObj(int index) {
-    if(index < 0 || index >= noObj) return;
-    //const std::lock_guard<std::mutex> lock(stateMutex);
-    obj_params.erase(obj_params.begin() + index);
+void State::removeObj(int id) {
+    auto iter = std::find_if(obj_params.begin(),obj_params.end(),[id](std::unique_ptr<ObjParams>& o) {return o->id == id;});
+    int index = iter - obj_params.begin();
+    if(index == noObj) return;
+    obj_params.erase(iter);
     noObj--;
     Eigen::VectorXd newState(state.size() - 6);
     newState << state.head(6*index), state.tail(6*(noObj-index));
     state = newState;
+}
+
+std::string State::to_string()
+{
+    static Eigen::IOFormat commaFormat(3, Eigen::DontAlignCols," ",",","","",",",";");
+    std::string msg;
+    msg.reserve((noObj*60 + 100));
+    msg += std::to_string(real_time);
+    msg.push_back(';');
+    for (int i = 0; i < noObj; i++)
+    {
+        msg += std::to_string(obj_params[i]->id);
+        std::stringstream ss;
+        ss << state.segment<6>(6*i).format(commaFormat);
+        msg += ss.str();
+        msg.push_back(';');
+    }
+    return msg;
 }
