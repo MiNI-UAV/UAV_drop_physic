@@ -18,8 +18,9 @@ namespace fs = std::filesystem;
 
 Simulation::Simulation()
 {
-    if (!fs::create_directory(path.substr(6)))
-        std::cerr << "Can not create comunication folder" <<std::endl;
+
+    if (!std::filesystem::exists(path.substr(6)) && !fs::create_directory(path.substr(6)))
+        std::cerr <<  "Can not create comunication folder" <<std::endl;
     calcRHS();
     statePublishSocket = zmq::socket_t(_ctx, zmq::socket_type::pub);
     statePublishSocket.bind(path + "/state");
@@ -40,6 +41,7 @@ Simulation::Simulation()
                 return;
             } 
             std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
+            zmq::message_t response("ok",2);
             switch(msg_str[0])
             {
                 case 'a':
@@ -47,6 +49,7 @@ Simulation::Simulation()
                 break;
                 case 'r':
                     removeObj(std::stoi(msg_str.substr(2)));
+                    controlInSock.send(response,zmq::send_flags::none);
                 break;
                 case 'w':
                     updateWind(msg_str,controlInSock);
@@ -54,9 +57,10 @@ Simulation::Simulation()
                 case 's':
                     run = false;
                     state.status = Status::exiting;
+                    controlInSock.send(response,zmq::send_flags::none);
                 break;
                 default:
-                    zmq::message_t response("error",5);
+                    response.rebuild("error",5);
                     controlInSock.send(response,zmq::send_flags::none);
                     std::cerr << "Unknown msg: " << msg_str << std::endl;
                     state.status = Status::exiting;
