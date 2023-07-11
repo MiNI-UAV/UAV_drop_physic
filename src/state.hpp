@@ -57,7 +57,7 @@ class State
         std::string to_string();
 
         inline int getNoObj() {return noObj;}
-        inline ObjParams& getParams(int index) {return *obj_params[index];}
+        inline ObjParams* getParams(int index) {return obj_params[index].get();}
         inline Eigen::Vector3d getPos(int index) {return state.segment<3>(6*index);}
         inline Eigen::Vector3d getVel(int index) {return state.segment<3>(3+6*index);}
 

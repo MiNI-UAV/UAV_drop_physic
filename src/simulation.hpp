@@ -33,5 +33,5 @@ class Simulation
 
         void sendState(std::string&& msg);
         void calcRHS();
-        Eigen::Vector3d calcAerodynamicForce(Eigen::Vector3d vel, ObjParams& params);
+        Eigen::Vector3d calcAerodynamicForce(Eigen::Vector3d vel, ObjParams* params);
 };

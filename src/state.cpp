@@ -1,5 +1,6 @@
 #include <Eigen/Dense>
 #include <mutex>
+#include <iostream>
 #include "state.hpp"
 #include "status.hpp"
 
@@ -33,7 +34,7 @@ Eigen::Vector3d ObjParams::getForce()
         forceValidityCounter--;
         return force;
     }
-    return Eigen::Vector3d();
+    return Eigen::Vector3d(0.0,0.0,0.0);
 }
 
 
