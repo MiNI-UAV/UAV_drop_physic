@@ -1,8 +1,41 @@
 #include <Eigen/Dense>
+#include <mutex>
 #include "state.hpp"
 #include "status.hpp"
 
 int ObjParams::counter = 0;
+
+
+void ObjParams::setWind(Eigen::Vector3d newWind) 
+{
+    std::scoped_lock lock(mtxWind);
+    wind = newWind;
+}
+
+Eigen::Vector3d ObjParams::getWind()
+{
+    std::scoped_lock lock(mtxWind);
+    return wind;
+}
+
+void ObjParams::setForce(Eigen::Vector3d newForce)
+{
+    std::scoped_lock lock(mtxForce);
+    force = newForce;
+    forceValidityCounter = validityOfForce * 4; //< 4 times bcs RK4 call function 4 times.
+}
+
+Eigen::Vector3d ObjParams::getForce()
+{
+    std::scoped_lock lock(mtxForce);
+    if(forceValidityCounter > 0)
+    {
+        forceValidityCounter--;
+        return force;
+    }
+    return Eigen::Vector3d();
+}
+
 
 State::State()
 {
@@ -27,7 +60,14 @@ void State::updateState(Eigen::VectorXd newState) {
 void State::updateWind(int id, Eigen::Vector3d newWind) {
     auto iter = std::find_if(obj_params.begin(),obj_params.end(),[id](std::unique_ptr<ObjParams>& o) {return o->id == id;});
     if(iter == obj_params.end()) return;
-    iter->get()->wind = newWind;
+    iter->get()->setWind(newWind);
+}
+
+void State::updateForce(int id, Eigen::Vector3d newForce) 
+{
+    auto iter = std::find_if(obj_params.begin(),obj_params.end(),[id](std::unique_ptr<ObjParams>& o) {return o->id == id;});
+    if(iter == obj_params.end()) return;
+    iter->get()->setForce(newForce);
 }
 
 void State::addObj(double mass, double diameter, Eigen::Vector3d pos,

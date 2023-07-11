@@ -54,6 +54,9 @@ Simulation::Simulation()
                 case 'w':
                     updateWind(msg_str,controlInSock);
                 break;
+                case 'f':
+                    updateForce(msg_str,controlInSock);
+                break;
                 case 's':
                     run = false;
                     state.status = Status::exiting;
@@ -90,14 +93,14 @@ void Simulation::run()
 void Simulation::addObj(double mass, double CS,
     Eigen::Vector3d pos, Eigen::Vector3d vel) 
 {
-    const std::lock_guard<std::mutex> lock(state.stateMutex);
+    const std::scoped_lock lock(state.stateMutex);
     state.addObj(mass,CS,pos,vel);
     calcRHS();
 }
 
 void Simulation::removeObj(int id)
 {
-    const std::lock_guard<std::mutex> lock(state.stateMutex);
+    const std::scoped_lock lock(state.stateMutex);
     state.removeObj(id);
     calcRHS();
 }
@@ -189,9 +192,42 @@ void Simulation::updateWind(std::string msg, zmq::socket_t& sock)
     sock.send(response,zmq::send_flags::none);
 }
 
+void Simulation::updateForce(std::string msg, zmq::socket_t &sock)
+{
+    zmq::message_t response("error",5);
+    std::istringstream f(msg.substr(2));
+    std::string s;
+    int id = -1,j;
+    Eigen::Vector3d force;
+    for(j = 0; j < 4; j++)
+    {
+        if(!getline(f, s, ',')) break;
+        switch (j)
+        {
+            case 0:
+                id = std::stoi(s);
+                break;
+            case 1:
+            case 2:
+            case 3:
+                force(j-1) = std::stod(s);
+                break;
+        }
+    }
+    if(j != 4)
+    {
+        std::cerr << "Invalid add command: " << msg << std::endl;
+        sock.send(response,zmq::send_flags::none);
+        return;
+    }
+    state.updateForce(id,force);
+    response.rebuild("ok",2);
+    sock.send(response,zmq::send_flags::none);
+}
+
 Eigen::Vector3d Simulation::calcAerodynamicForce(Vector3d vel, ObjParams& params)
 {
-    Eigen::Vector3d diff = vel-params.wind;
+    Eigen::Vector3d diff = vel-params.getWind();
     double dynamic_pressure = 0.5*air_density*diff.dot(diff);
     if(dynamic_pressure == 0.0)
     {
@@ -216,7 +252,7 @@ void Simulation::calcRHS()
             {
                 ObjParams& p = state.getParams(i);
                 Eigen::Vector3d vel = local_state.segment<3>(3+6*i);
-                res.segment<3>(3+6*i) = (p.mass*gravity + calcAerodynamicForce(vel,p))/p.mass;
+                res.segment<3>(3+6*i) = (p.mass*gravity + calcAerodynamicForce(vel,p) + p.getForce())/p.mass;
             }
             return res;
         };
