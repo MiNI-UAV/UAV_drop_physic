@@ -4,6 +4,7 @@
 #include <thread>
 #include <vector>
 #include <mutex>
+#include <atomic>
 #include "status.hpp"
 
 class ObjParams
@@ -37,7 +38,7 @@ class ObjParams
         Eigen::Vector3d wind;
         std::mutex mtxWind;
         Eigen::Vector3d force;
-        int forceValidityCounter;
+        std::atomic_int forceValidityCounter;
         std::mutex mtxForce;
 
 };
