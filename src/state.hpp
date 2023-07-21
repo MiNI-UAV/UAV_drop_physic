@@ -3,26 +3,44 @@
 #include <zmq.hpp>
 #include <thread>
 #include <vector>
+#include <mutex>
+#include <atomic>
 #include "status.hpp"
 
-struct ObjParams
+class ObjParams
 {
-    const int id;
-    const double mass;
-    const double CS_coff;
-    Eigen::Vector3d wind;
-
     static int counter;
+    constexpr static int validityOfForce = 3;
 
-    ObjParams(double mass, double CS_coff):
-    id{counter++}, mass{mass}, CS_coff{CS_coff}, wind{Eigen::Vector3d()}
-    {   
-    }
+    public: 
+        const int id;
+        const double mass;
+        const double CS_coff;
+       
 
-    ObjParams(ObjParams&& rhs)
-     : id{rhs.id}, mass{rhs.mass}, CS_coff{CS_coff}, wind{rhs.wind}
-    {
-    }
+
+        ObjParams(double mass, double CS_coff):
+        id{counter++}, mass{mass}, CS_coff{CS_coff}, wind{Eigen::Vector3d()} , force{Eigen::Vector3d()}, forceValidityCounter{-1}
+        {   
+        }
+
+        ObjParams(ObjParams&& rhs)
+        : id{rhs.id}, mass{rhs.mass}, CS_coff{CS_coff}, wind{rhs.wind}
+        {
+        }
+
+        void setWind(Eigen::Vector3d newWind);
+        Eigen::Vector3d getWind();
+        void setForce(Eigen::Vector3d newForce);
+        Eigen::Vector3d getForce();
+
+    private:
+        Eigen::Vector3d wind;
+        std::mutex mtxWind;
+        Eigen::Vector3d force;
+        std::atomic_int forceValidityCounter;
+        std::mutex mtxForce;
+
 };
 
 class State
@@ -32,6 +50,7 @@ class State
         Eigen::VectorXd getState();
         void updateState(Eigen::VectorXd newState);
         void updateWind(int id, Eigen::Vector3d newWind);
+        void updateForce(int id, Eigen::Vector3d newForce);
         std::mutex stateMutex;
 
         void addObj(double mass, double CS_coff, Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
@@ -39,7 +58,7 @@ class State
         std::string to_string();
 
         inline int getNoObj() {return noObj;}
-        inline ObjParams& getParams(int index) {return *obj_params[index];}
+        inline ObjParams* getParams(int index) {return obj_params[index].get();}
         inline Eigen::Vector3d getPos(int index) {return state.segment<3>(6*index);}
         inline Eigen::Vector3d getVel(int index) {return state.segment<3>(3+6*index);}
 
