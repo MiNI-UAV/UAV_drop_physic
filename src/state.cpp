@@ -108,3 +108,10 @@ std::string State::to_string()
     }
     return msg;
 }
+
+int State::findIndex(int id)
+{
+    auto iter = std::find_if(obj_params.begin(),obj_params.end(),[id](std::unique_ptr<ObjParams>& o) {return o->id == id;});
+    int index = iter - obj_params.begin();
+    return index == noObj ? -1 : index;
+}

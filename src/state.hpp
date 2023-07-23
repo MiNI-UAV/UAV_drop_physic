@@ -57,10 +57,12 @@ class State
         void removeObj(int id);
         std::string to_string();
 
+        int findIndex(int id);
         inline int getNoObj() {return noObj;}
         inline ObjParams* getParams(int index) {return obj_params[index].get();}
         inline Eigen::Vector3d getPos(int index) {return state.segment<3>(6*index);}
         inline Eigen::Vector3d getVel(int index) {return state.segment<3>(3+6*index);}
+        inline void setVel(int index, Eigen::Vector3d newVel) {state.segment<3>(3+6*index) = newVel;}
 
         double real_time;
         Status status;

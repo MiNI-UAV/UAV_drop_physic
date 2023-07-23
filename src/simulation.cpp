@@ -57,6 +57,9 @@ Simulation::Simulation()
                 case 'f':
                     updateForce(msg_str,controlInSock);
                 break;
+                case 'j':
+                    solidSurfColision(msg_str,controlInSock);
+                break;
                 case 's':
                     run = false;
                     state.status = Status::exiting;
@@ -234,6 +237,90 @@ Eigen::Vector3d Simulation::calcAerodynamicForce(Vector3d vel, ObjParams* params
         return Eigen::Vector3d(0.0,0.0,0.0);
     }
     return -params->CS_coff*dynamic_pressure*diff.normalized();
+}
+
+void Simulation::calcImpulseForce(int id,double COR, double mi_static, double mi_dynamic, Eigen::Vector3d surfaceNormal)
+{
+    const std::lock_guard<std::mutex> lock(state.stateMutex);
+    int index = state.findIndex(id);
+    std::cout << "Index " << index << std::endl; 
+    if(index < 0) return;
+
+    Eigen::Vector3d v = state.getVel(index);
+    Eigen::Vector3d X_g = v;
+    double vn = v.dot(surfaceNormal);
+    if(vn >= 0.0)
+    {
+        return;
+    }
+    double mass = state.getParams(index)->mass;
+    std::cout << "Energy before collision: " << 0.5*state.getParams(index)->mass* X_g.squaredNorm() << std::endl;
+    if(vn > -GENTLY_PUSH) vn = -GENTLY_PUSH;
+    double jr = (-(1+COR)*vn)*mass;
+    X_g = X_g + (jr/mass)*surfaceNormal;
+    Eigen::Vector3d vt = v - (v.dot(surfaceNormal))*surfaceNormal;
+    if(vt.squaredNorm() > FRICTION_EPS)
+    {
+        Eigen::Vector3d tangent = vt.normalized();
+        double js = mi_static*jr;
+        double jd = mi_dynamic*jr;
+        double jf = -vt.norm()*mass;
+        if(jf > js) jf = jd;
+        X_g = X_g + (jf/mass) *tangent;
+    }
+    std::cout << "Energy after collision: " << 0.5*state.getParams(index)->mass* v.squaredNorm()  << std::endl;
+    state.setVel(index,X_g);
+}
+
+bool isNormal(double factor)
+{
+    return factor >= 0.0 && factor <= 1.0;
+}
+
+void Simulation::solidSurfColision(std::string& msg_str, zmq::socket_t& sock)
+{
+    std::istringstream f(msg_str.substr(2));
+    zmq::message_t response("error",5);
+    int i, id = -1;
+    double COR = 0.0, mi_static = 0.0, mi_dynamic = 0.0;
+    Eigen::Vector3d surfaceNormal(0.0,0.0,0.0);
+    std::string res;
+    for (i = 0; i < 7; i++)
+    {
+        if(!getline(f, res, ',')) break;
+        switch (i)
+        {
+        case 0:
+            id = std::stoi(res);
+        break;
+        case 1:
+            COR = std::stod(res);
+            break;
+        case 2:
+            mi_static = std::stod(res);
+            break;
+        case 3:
+            mi_dynamic = std::stod(res);
+            break;
+        case 4:
+        case 5:
+        case 6:
+            surfaceNormal(i-4) = std::stod(res);
+            break;
+        }
+    }
+    if (i == 7
+        && id >= 0
+        && isNormal(COR)
+        && isNormal(mi_static)
+        && isNormal(mi_dynamic)
+        && mi_static >= mi_dynamic)
+    {
+        calcImpulseForce(id,COR, mi_static, mi_dynamic, surfaceNormal);
+        response.rebuild("ok",2);
+    }
+    sock.send(response,zmq::send_flags::none);
+    return; 
 }
 
 void Simulation::calcRHS()

@@ -5,6 +5,9 @@
 #include <Eigen/Dense>
 #include <functional>
 
+#define FRICTION_EPS 0.001
+#define GENTLY_PUSH 0.15
+
 class Simulation
 {
     public:
@@ -18,6 +21,9 @@ class Simulation
         void addCommand(std::string msg, zmq::socket_t& sock);
         void updateWind(std::string msg, zmq::socket_t& sock);
         void updateForce(std::string msg, zmq::socket_t& sock);
+        void solidSurfColision(std::string& msg_str, zmq::socket_t& sock);
+        void calcImpulseForce(int id, double COR,
+            double mi_static, double mi_dynamic, Eigen::Vector3d surfaceNormal);
 
     private:
         const double step_time = 0.005;
