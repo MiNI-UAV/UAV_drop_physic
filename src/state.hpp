@@ -10,7 +10,7 @@
 class ObjParams
 {
     static int counter;
-    constexpr static int validityOfForce = 3;
+    constexpr static int validityOfForce = 1;
 
     public: 
         const int id;
