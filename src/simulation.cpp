@@ -93,12 +93,13 @@ void Simulation::run()
     loop.go();
 }
 
-void Simulation::addObj(double mass, double CS,
+int Simulation::addObj(double mass, double CS,
     Eigen::Vector3d pos, Eigen::Vector3d vel) 
 {
     const std::scoped_lock lock(state.stateMutex);
-    state.addObj(mass,CS,pos,vel);
+    int id = state.addObj(mass,CS,pos,vel);
     calcRHS();
+    return id;
 }
 
 void Simulation::removeObj(int id)
@@ -141,8 +142,9 @@ void Simulation::addCommand(std::string msg, zmq::socket_t& sock)
     zmq::message_t response("error",5);
     if(i == 5 || i == 8)
     {
-        addObj(m,CS,pos,vel);
-        response.rebuild("ok",2);
+        int id = addObj(m,CS,pos,vel);
+        auto msg = "ok;" + std::to_string(id);
+        response.rebuild(msg.data(),msg.size());
     }
     else
     {

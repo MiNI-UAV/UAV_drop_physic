@@ -53,7 +53,7 @@ class State
         void updateForce(int id, Eigen::Vector3d newForce);
         std::mutex stateMutex;
 
-        void addObj(double mass, double CS_coff, Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
+        int addObj(double mass, double CS_coff, Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
         void removeObj(int id);
         std::string to_string();
 

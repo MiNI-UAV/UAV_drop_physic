@@ -71,14 +71,17 @@ void State::updateForce(int id, Eigen::Vector3d newForce)
     iter->get()->setForce(newForce);
 }
 
-void State::addObj(double mass, double diameter, Eigen::Vector3d pos,
+int State::addObj(double mass, double diameter, Eigen::Vector3d pos,
                    Eigen::Vector3d vel) 
 {
-    obj_params.push_back(std::make_unique<ObjParams>(mass,diameter));
+    auto new_obj_param = std::make_unique<ObjParams>(mass,diameter);
+    int id = new_obj_param->id;
+    obj_params.push_back(std::move(new_obj_param));
     noObj++;
     Eigen::VectorXd newState(state.size() + 6);
     newState << state, pos, vel;
     state = newState;
+    return id;
 }
 
 void State::removeObj(int id) {

@@ -15,7 +15,7 @@ class Simulation
         ~Simulation();
         void run();
 
-        void addObj(double mass, double CS,
+        int addObj(double mass, double CS,
             Eigen::Vector3d pos, Eigen::Vector3d vel = Eigen::Vector3d());
         void removeObj(int id);
         void addCommand(std::string msg, zmq::socket_t& sock);
