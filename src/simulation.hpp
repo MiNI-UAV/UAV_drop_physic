@@ -4,6 +4,8 @@
 #include "state.hpp"
 #include <Eigen/Dense>
 #include <functional>
+#include "common.hpp"
+
 
 #define FRICTION_EPS 0.001
 #define GENTLY_PUSH 0.15

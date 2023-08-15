@@ -9,11 +9,9 @@
 #include <map>
 #include <filesystem>
 namespace fs = std::filesystem;
-
 #include "simulation.hpp"
-#include "timed_loop.hpp"
+#include "common.hpp"
 #include "state.hpp"
-#include "RK4.hpp"
 
 
 Simulation::Simulation()
@@ -230,7 +228,7 @@ void Simulation::updateForce(std::string msg, zmq::socket_t &sock)
     sock.send(response,zmq::send_flags::none);
 }
 
-Eigen::Vector3d Simulation::calcAerodynamicForce(Vector3d vel, ObjParams* params)
+Eigen::Vector3d Simulation::calcAerodynamicForce(Eigen::Vector3d vel, ObjParams* params)
 {
     Eigen::Vector3d diff = vel-params->getWind();
     double dynamic_pressure = 0.5*air_density*diff.dot(diff);
@@ -329,7 +327,7 @@ void Simulation::calcRHS()
 {
     if(state.getNoObj() == 0)
     {
-        RHS = [] (double, Eigen::VectorXd) {return VectorXd();};
+        RHS = [] (double, Eigen::VectorXd) {return Eigen::VectorXd();};
         return;
     }
     RHS = [this] (double, Eigen::VectorXd local_state) 
