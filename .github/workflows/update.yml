@@ -13,6 +13,6 @@ jobs:
           const result = await github.rest.repos.createDispatchEvent({
             owner: context.repo.owner,
             repo: 'UAV_server',
-            event_type: 'dependency_update',}
+            event_type: 'dependency_update'
           })
           console.log(result);
