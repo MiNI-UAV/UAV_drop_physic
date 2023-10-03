@@ -72,5 +72,6 @@ class State
         int noObj;
         Eigen::VectorXd state;
         std::vector<std::unique_ptr<ObjParams>> obj_params;
+        Logger logger;
        
 };

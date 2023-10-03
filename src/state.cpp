@@ -38,7 +38,7 @@ Eigen::Vector3d ObjParams::getForce()
 }
 
 
-State::State()
+State::State(): logger("state.csv","time,id,PosX,PosY,PosZ,VelX,VelY,VelZ")
 {
     status = Status::running;
     real_time = 0.0;
@@ -71,16 +71,19 @@ void State::updateForce(int id, Eigen::Vector3d newForce)
     iter->get()->setForce(newForce);
 }
 
-int State::addObj(double mass, double diameter, Eigen::Vector3d pos,
+int State::addObj(double mass, double CS, Eigen::Vector3d pos,
                    Eigen::Vector3d vel) 
 {
-    auto new_obj_param = std::make_unique<ObjParams>(mass,diameter);
+    static Logger obj_params_logger("params.csv", "time,id,CS");
+
+    auto new_obj_param = std::make_unique<ObjParams>(mass,CS);
     int id = new_obj_param->id;
     obj_params.push_back(std::move(new_obj_param));
     noObj++;
     Eigen::VectorXd newState(state.size() + 6);
     newState << state, pos, vel;
     state = newState;
+    obj_params_logger.log(real_time,{static_cast<double>(id), CS});
     return id;
 }
 
@@ -108,6 +111,7 @@ std::string State::to_string()
         std::stringstream ss;
         ss << state.segment<6>(6*i).format(commaFormat);
         msg += ss.str();
+        logger.log(real_time,{ Eigen::Vector<double,1>(obj_params[i]->id),state.segment<6>(6*i)});
     }
     return msg;
 }

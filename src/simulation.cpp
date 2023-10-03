@@ -78,11 +78,11 @@ Simulation::Simulation()
 
 void Simulation::run()
 {
-    TimedLoop loop(std::round(step_time*1000.0), [this](){
+    TimedLoop loop(std::round(def::STEP_TIME*1000.0), [this](){
         std::unique_lock<std::mutex> lock(state.stateMutex);
-        Eigen::VectorXd next = RK4_step(state.real_time,state.getState(),RHS,step_time);
+        Eigen::VectorXd next = RK4_step(state.real_time,state.getState(),RHS,def::STEP_TIME);
         state.updateState(next);
-        state.real_time += step_time;
+        state.real_time += def::STEP_TIME;
         auto msg = state.to_string();
         lock.unlock();
         sendState(std::move(msg));
@@ -231,7 +231,7 @@ void Simulation::updateForce(std::string msg, zmq::socket_t &sock)
 Eigen::Vector3d Simulation::calcAerodynamicForce(Eigen::Vector3d vel, ObjParams* params)
 {
     Eigen::Vector3d diff = vel-params->getWind();
-    double dynamic_pressure = 0.5*air_density*diff.dot(diff);
+    double dynamic_pressure = 0.5*def::DEFAULT_AIR_DENSITY*diff.dot(diff);
     if(dynamic_pressure == 0.0)
     {
         return Eigen::Vector3d(0.0,0.0,0.0);
@@ -255,11 +255,11 @@ void Simulation::calcImpulseForce(int id,double COR, double mi_static, double mi
     }
     double mass = state.getParams(index)->mass;
     std::cout << "Energy before collision: " << 0.5*state.getParams(index)->mass* X_g.squaredNorm() << std::endl;
-    if(vn > -GENTLY_PUSH) vn = -GENTLY_PUSH;
+    if(vn > -def::GENTLY_PUSH) vn = -def::GENTLY_PUSH;
     double jr = (-(1+COR)*vn)*mass;
     X_g = X_g + (jr/mass)*surfaceNormal;
     Eigen::Vector3d vt = v - (v.dot(surfaceNormal))*surfaceNormal;
-    if(vt.squaredNorm() > FRICTION_EPS)
+    if(vt.squaredNorm() > def::FRICTION_EPS)
     {
         Eigen::Vector3d tangent = vt.normalized();
         double js = mi_static*jr;
@@ -325,6 +325,7 @@ void Simulation::solidSurfColision(std::string& msg_str, zmq::socket_t& sock)
 
 void Simulation::calcRHS()
 {
+    static const Eigen::Vector3d gravity = Eigen::Vector3d(0.0,0.0,def::GRAVITY_CONST);
     if(state.getNoObj() == 0)
     {
         RHS = [] (double, Eigen::VectorXd) {return Eigen::VectorXd();};

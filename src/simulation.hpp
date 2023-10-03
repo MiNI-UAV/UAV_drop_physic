@@ -5,10 +5,10 @@
 #include <Eigen/Dense>
 #include <functional>
 #include "common.hpp"
+#include "defines.hpp"
 
 
-#define FRICTION_EPS 0.001
-#define GENTLY_PUSH 0.15
+
 
 class Simulation
 {
@@ -28,9 +28,6 @@ class Simulation
             double mi_static, double mi_dynamic, Eigen::Vector3d surfaceNormal);
 
     private:
-        const double step_time = 0.005;
-        const Eigen::Vector3d gravity = Eigen::Vector3d(0.0,0.0,9.81);
-        const double air_density = 1.204;
         const std::string path = "ipc:///tmp/drop_shot";
 
         zmq::context_t _ctx;
