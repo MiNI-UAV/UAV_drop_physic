@@ -1,7 +1,7 @@
 #pragma once
 
 namespace def {
-const double STEP_TIME = 0.005;
+const double STEP_TIME = 0.003;
 const double GRAVITY_CONST = 9.81;
 const double FRICTION_EPS = 0.001;
 const double GENTLY_PUSH = 0.15;

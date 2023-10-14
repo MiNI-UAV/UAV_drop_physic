@@ -17,8 +17,6 @@ class ObjParams
         const double mass;
         const double CS_coff;
        
-
-
         ObjParams(double mass, double CS_coff):
         id{counter++}, mass{mass}, CS_coff{CS_coff}, wind{Eigen::Vector3d()} , force{Eigen::Vector3d()}, forceValidityCounter{-1}
         {   
