@@ -6,6 +6,7 @@
 #include <functional>
 #include "common.hpp"
 #include "defines.hpp"
+#include "params.hpp"
 
 
 
@@ -13,7 +14,7 @@
 class Simulation
 {
     public:
-        Simulation();
+        Simulation(const Params& params);
         ~Simulation();
         void run();
 
@@ -35,6 +36,7 @@ class Simulation
         std::function<Eigen::VectorXd(double,Eigen::VectorXd)> RHS;
         std::thread controlListener;
         zmq::socket_t statePublishSocket;
+        const Params& _params;
 
         void sendState(std::string&& msg);
         void calcRHS();

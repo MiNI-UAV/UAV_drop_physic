@@ -14,7 +14,8 @@ namespace fs = std::filesystem;
 #include "state.hpp"
 
 
-Simulation::Simulation()
+Simulation::Simulation(const Params& params)
+    : _params{params}
 {
 
     if (!std::filesystem::exists(path.substr(6)) && !fs::create_directory(path.substr(6)))
@@ -78,11 +79,11 @@ Simulation::Simulation()
 
 void Simulation::run()
 {
-    TimedLoop loop(std::round(def::STEP_TIME*1000.0), [this](){
+    TimedLoop loop(std::round(_params.STEP_TIME*1000.0), [this](){
         std::unique_lock<std::mutex> lock(state.stateMutex);
-        Eigen::VectorXd next = RK4_step(state.real_time,state.getState(),RHS,def::STEP_TIME);
+        Eigen::VectorXd next = RK4_step(state.real_time,state.getState(),RHS,_params.STEP_TIME);
         state.updateState(next);
-        state.real_time += def::STEP_TIME;
+        state.real_time += _params.STEP_TIME;
         auto msg = state.to_string();
         lock.unlock();
         sendState(std::move(msg));
