@@ -3,6 +3,7 @@
 #include <iostream>
 #include "state.hpp"
 #include "common.hpp"
+#include "params.hpp"
 
 int ObjParams::counter = 0;
 
@@ -21,9 +22,11 @@ Eigen::Vector3d ObjParams::getWind()
 
 void ObjParams::setForce(Eigen::Vector3d newForce)
 {
-    std::scoped_lock lock(mtxForce);
-    force = newForce;
-    forceValidityCounter = validityOfForce * 4; //< 4 times bcs RK4 call function 4 times.
+  static const int ODE_microsteps =
+      ODE::getMicrosteps(ODE::fromString(Params::getSingleton()->ODE_METHOD));
+  std::scoped_lock lock(mtxForce);
+  force = newForce;
+  forceValidityCounter = validityOfForce * ODE_microsteps;
 }
 
 Eigen::Vector3d ObjParams::getForce()

@@ -8,10 +8,9 @@
 /// @brief Parse CL arguments
 /// @param argc number of argument
 /// @param argv argument array
-/// @return filled Params struct
-Params parseArgs(int argc, char** argv)
+/// @param p reference to params instant that should be filled
+Params parseArgs(int argc, char** argv, Params& p)
 {
-    Params p;
     cxxopts::Options options("drop", "Physic engine for non-propelled objects");
     options.add_options()
         ("dt", "Step time of simulation in ms. Default: 3 ms", cxxopts::value<int>())
@@ -38,7 +37,8 @@ Params parseArgs(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-    auto params = parseArgs(argc,argv);
+    Params params;
+    parseArgs(argc,argv, params);
     Logger::setLogDirectory("drop_physic");
     Simulation s(params);
     s.run();

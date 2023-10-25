@@ -15,9 +15,13 @@ namespace fs = std::filesystem;
 
 
 Simulation::Simulation(const Params& params)
-    : _params{params}
+    : _params{params}, ode{ODE::factory(ODE::fromString(params.ODE_METHOD))}
 {
-
+    if(ode == nullptr)
+    {
+        std::cerr << "Failed to get ODE algorith";
+        return;
+    }
     if (!std::filesystem::exists(path.substr(6)) && !fs::create_directory(path.substr(6)))
         std::cerr <<  "Can not create comunication folder" <<std::endl;
     calcRHS();
@@ -79,9 +83,14 @@ Simulation::Simulation(const Params& params)
 
 void Simulation::run()
 {
+    if(ode == nullptr)
+    {
+        std::cerr << "ODE is not defined";
+        return;
+    }
     TimedLoop loop(std::round(_params.STEP_TIME*1000.0), [this](){
         std::unique_lock<std::mutex> lock(state.stateMutex);
-        Eigen::VectorXd next = RK4_step(state.real_time,state.getState(),RHS,_params.STEP_TIME);
+        Eigen::VectorXd next = ode->step(state.real_time,state.getState(),RHS,_params.STEP_TIME);
         state.updateState(next);
         state.real_time += _params.STEP_TIME;
         auto msg = state.to_string();

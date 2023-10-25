@@ -74,6 +74,7 @@ class Simulation
         std::thread controlListener;
         zmq::socket_t statePublishSocket;
         const Params& _params;
+        std::unique_ptr<ODE> ode;
 
         void sendState(std::string&& msg);
         void calcRHS();
