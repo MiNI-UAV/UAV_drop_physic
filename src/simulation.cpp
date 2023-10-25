@@ -19,7 +19,7 @@ Simulation::Simulation(const Params& params)
 {
     if(ode == nullptr)
     {
-        std::cerr << "Failed to get ODE algorith";
+        std::cerr << "Failed to get ODE algorithm" << std::endl;
         return;
     }
     if (!std::filesystem::exists(path.substr(6)) && !fs::create_directory(path.substr(6)))
@@ -85,7 +85,7 @@ void Simulation::run()
 {
     if(ode == nullptr)
     {
-        std::cerr << "ODE is not defined";
+        std::cerr << "Exitting!" << std::endl;
         return;
     }
     TimedLoop loop(std::round(_params.STEP_TIME*1000.0), [this](){
@@ -358,12 +358,14 @@ void Simulation::calcRHS()
 
 void Simulation::sendState(std::string&& msg)
 {
-    //std::cout << msg << std::endl;
     zmq::message_t message(msg.data(), msg.size());
     statePublishSocket.send(message,zmq::send_flags::none);
 }
 
 Simulation::~Simulation()
 {
-    controlListener.join();
+    if(controlListener.joinable())
+    {
+        controlListener.join();
+    }       
 }
