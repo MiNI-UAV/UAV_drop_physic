@@ -5,6 +5,10 @@
 #include "common.hpp"
 #include "params.hpp"
 
+/// @brief Parse CL arguments
+/// @param argc number of argument
+/// @param argv argument array
+/// @return filled Params struct
 Params parseArgs(int argc, char** argv)
 {
     Params p;
