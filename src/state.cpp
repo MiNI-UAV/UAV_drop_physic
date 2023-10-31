@@ -4,6 +4,7 @@
 #include "state.hpp"
 #include "common.hpp"
 #include "params.hpp"
+#include "defines.hpp"
 
 int ObjParams::counter = 0;
 
@@ -26,7 +27,7 @@ void ObjParams::setForce(Eigen::Vector3d newForce)
       ODE::getMicrosteps(ODE::fromString(Params::getSingleton()->ODE_METHOD));
   std::scoped_lock lock(mtxForce);
   force = newForce;
-  forceValidityCounter = validityOfForce * ODE_microsteps;
+  forceValidityCounter = def::VALIDITY_OF_FORCE * ODE_microsteps;
 }
 
 Eigen::Vector3d ObjParams::getForce()

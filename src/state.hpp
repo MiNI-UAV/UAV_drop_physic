@@ -58,8 +58,6 @@ class ObjParams
     
     /// @brief static counter of instances. Used to get next ID
     static int counter;
-    /// @brief how many steps outer force should be valid
-    constexpr static int validityOfForce = 1;
 };
 
 class State

@@ -15,4 +15,7 @@ namespace def
 
     /// Dry air density in normal conditions in kg/m3
     const double DEFAULT_AIR_DENSITY = 1.224;
+
+    /// @brief how many steps outer force should be valid
+    const static int VALIDITY_OF_FORCE = 1;
 } // namespace def
