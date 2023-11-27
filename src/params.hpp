@@ -8,6 +8,10 @@ public:
     /// @brief Constructor
     Params();
 
+    Params(const Params&) = delete; // no copies
+    Params& operator=(const Params&) = delete; // no self-assignments
+    Params(Params&&) = delete; // no moves
+
     /// @brief Deconstructor
     ~Params();
 

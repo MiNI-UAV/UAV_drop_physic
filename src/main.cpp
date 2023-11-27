@@ -9,7 +9,7 @@
 /// @param argc number of argument
 /// @param argv argument array
 /// @param p reference to params instant that should be filled
-Params parseArgs(int argc, char** argv, Params& p)
+void parseArgs(int argc, char** argv, Params& p)
 {
     cxxopts::Options options("drop", "Physic engine for non-propelled objects");
     options.add_options()
@@ -32,12 +32,11 @@ Params parseArgs(int argc, char** argv, Params& p)
         p.ODE_METHOD = result["ode"].as<std::string>();
         std::cout << "ODE method changed to " << p.ODE_METHOD  << std::endl;
     }
-    return p;
 }
 
 int main(int argc, char** argv)
 {
-    Params params;
+    Params params{};
     parseArgs(argc,argv, params);
     Logger::setLogDirectory("drop_physic");
     Simulation s(params);

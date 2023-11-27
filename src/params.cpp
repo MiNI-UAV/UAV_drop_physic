@@ -21,4 +21,11 @@ Params::~Params()
     _singleton = nullptr;
 }
 
-const Params *Params::getSingleton() { return _singleton; }
+const Params *Params::getSingleton() 
+{    
+    if(_singleton == nullptr)
+    {
+        std::cerr << "Params sigleton is null!" << std::endl;
+    }
+    return _singleton;
+}
