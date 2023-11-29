@@ -33,3 +33,13 @@ find_package(cxxopts)
 target_link_libraries(drop cxxopts::cxxopts)
 target_link_libraries(drop common) 
 target_include_directories(drop PRIVATE ${CMAKE_SOURCE_DIR}/lib/UAV_common/header)
+
+
+enable_testing()
+
+add_executable(integration_test tests/integration_test.cpp)
+target_link_libraries(integration_test pthread)
+
+add_dependencies(integration_test drop)
+target_link_libraries(integration_test gtest gtest_main cppzmq Eigen3::Eigen)
+add_test(NAME integration_test COMMAND integration_test)
