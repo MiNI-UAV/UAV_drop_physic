@@ -276,7 +276,7 @@ void Simulation::calcImpulseForce(int id,double COR, double mi_static, double mi
         double jd = mi_dynamic*jr;
         double jf = vt.norm() * mass;
         if(jf > js) jf = jd;
-        X_g = X_g + (jf/mass) * tangent;
+        X_g = X_g - (jf/mass) * tangent;
     }
     std::cout << "Energy after collision: " << 0.5*state.getParams(index)->mass* v.squaredNorm()  << std::endl;
     state.setVel(index,X_g);

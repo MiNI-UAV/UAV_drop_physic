@@ -312,6 +312,18 @@ TEST_F(DropTest, SolidSurfaceCollision) {
     Eigen::Vector3d vel_diff = vel_after_collision - Eigen::Vector3d(-10.0,0.0,0.0);
     dot = vel_diff.dot(normal)/vel_diff.norm();
     EXPECT_NEAR(dot, 1.0, tol);
+
+    sendControlMessage("a:5.0,0.0 ,0.0,0.0,0.0,10.0,0.0,-10.0");
+    collectSample(1);
+    sendControlMessage("j:3,1.0,0.4,0.3,0.0,0.0,1.0");
+    collectSample(1);
+    projectiles = getParsedState().second;
+    EXPECT_EQ(projectiles.size(),4);
+    vel_after_collision = projectiles[3].velocity;
+    EXPECT_GT(vel_after_collision.x(),2.0);
+    EXPECT_LT(vel_after_collision.x(),8.0);
+    EXPECT_NEAR(vel_after_collision.y(), 0.0, tol);
+    EXPECT_NEAR(vel_after_collision.z(), 10.0, tol);
 }
 
 /// Test if program simulates strong wind influence correctly
