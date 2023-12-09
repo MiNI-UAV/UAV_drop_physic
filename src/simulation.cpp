@@ -253,7 +253,6 @@ void Simulation::calcImpulseForce(int id,double COR, double mi_static, double mi
 {
     const std::lock_guard<std::mutex> lock(state.stateMutex);
     int index = state.findIndex(id);
-    std::cout << "Index " << index << std::endl; 
     if(index < 0) return;
 
     Eigen::Vector3d v = state.getVel(index);
