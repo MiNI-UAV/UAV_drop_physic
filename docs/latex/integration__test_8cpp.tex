@@ -1,0 +1,173 @@
+\hypertarget{integration__test_8cpp}{}\doxysection{tests/integration\+\_\+test.cpp File Reference}
+\label{integration__test_8cpp}\index{tests/integration\_test.cpp@{tests/integration\_test.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include $<$zmq.\+hpp$>$}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$future$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include \char`\"{}projectile\+\_\+parser.\+hpp\char`\"{}}\newline
+Include dependency graph for integration\+\_\+test.\+cpp\+:
+% FIG 0
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_drop_test}{Drop\+Test}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{integration__test_8cpp_ad11f5458279505bcb25753b4cd8e2da8}{TEST}} (Integration\+Test, Program\+Shows\+Help)
+\begin{DoxyCompactList}\small\item\em Test if program show correct usage. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{integration__test_8cpp_a5795742996b26546ab818239079b5a8d}{TEST\+\_\+F}} (\mbox{\hyperlink{class_drop_test}{Drop\+Test}}, Program\+Runs\+And\+Exits\+Correctly)
+\begin{DoxyCompactList}\small\item\em Test if program run and exit on command correctly. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{integration__test_8cpp_a241d96154452ec0bde74fc2fc343559a}{TEST\+\_\+F}} (\mbox{\hyperlink{class_drop_test}{Drop\+Test}}, Program\+Runs\+And\+Send\+State)
+\begin{DoxyCompactList}\small\item\em Test if program run send valid state. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{integration__test_8cpp_a2154acae3da82f24b719b833b3ed3d15}{TEST\+\_\+F}} (\mbox{\hyperlink{class_drop_test}{Drop\+Test}}, Add\+And\+Remove\+Projectiles)
+\begin{DoxyCompactList}\small\item\em Test if program handle add object and remove object command correctly. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{integration__test_8cpp_a58ace3b469f8bbdf1d3afc6199fbc56f}{TEST\+\_\+F}} (\mbox{\hyperlink{class_drop_test}{Drop\+Test}}, Check\+Free\+Fall)
+\begin{DoxyCompactList}\small\item\em Test if program simulates free fall correctly. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{integration__test_8cpp_ad49f160bbb1bbe07b00979664069ba6f}{TEST\+\_\+F}} (\mbox{\hyperlink{class_drop_test}{Drop\+Test}}, Like\+Parachute)
+\begin{DoxyCompactList}\small\item\em Test if program simulates air drag correctly. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{integration__test_8cpp_a5403970259ce94205efe8a85535828f3}{TEST\+\_\+F}} (\mbox{\hyperlink{class_drop_test}{Drop\+Test}}, Force\+Influence)
+\begin{DoxyCompactList}\small\item\em Test if program simulates outer forces influence correctly. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{integration__test_8cpp_a233a7964f2ac3d7fb45c0fdc1abd4b7e}{TEST\+\_\+F}} (\mbox{\hyperlink{class_drop_test}{Drop\+Test}}, Solid\+Surface\+Collision)
+\begin{DoxyCompactList}\small\item\em Test if program simulates solid surface collision correctly. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{integration__test_8cpp_a50ee0968e5a2b19586d08ad2550df34f}{TEST\+\_\+F}} (\mbox{\hyperlink{class_drop_test}{Drop\+Test}}, Strong\+Wind\+Influence)
+\begin{DoxyCompactList}\small\item\em Test if program simulates strong wind influence correctly. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{integration__test_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::string \mbox{\hyperlink{integration__test_8cpp_ac9bbe9b38aa7abf183276b16febc28a5}{program\+Path}} = \char`\"{}./drop\char`\"{}
+\item 
+const std\+::string \mbox{\hyperlink{integration__test_8cpp_a430b66fe7c84cf79717339fb8d7a1af2}{communication\+Folder}} = \char`\"{}ipc\+:///tmp/drop\+\_\+shot\char`\"{}
+\item 
+zmq\+::context\+\_\+t \mbox{\hyperlink{integration__test_8cpp_a39c9ace302ba1ab8525b04836fe76174}{ctx}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{integration__test_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{integration__test_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!main@{main}}
+\index{main@{main}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{integration__test_8cpp_ad11f5458279505bcb25753b4cd8e2da8}\label{integration__test_8cpp_ad11f5458279505bcb25753b4cd8e2da8}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}}
+{\footnotesize\ttfamily TEST (\begin{DoxyParamCaption}\item[{Integration\+Test}]{,  }\item[{Program\+Shows\+Help}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program show correct usage. 
+
+\mbox{\Hypertarget{integration__test_8cpp_a2154acae3da82f24b719b833b3ed3d15}\label{integration__test_8cpp_a2154acae3da82f24b719b833b3ed3d15}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/8]}}
+{\footnotesize\ttfamily TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drop_test}{Drop\+Test}}}]{,  }\item[{Add\+And\+Remove\+Projectiles}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program handle add object and remove object command correctly. 
+
+\mbox{\Hypertarget{integration__test_8cpp_a58ace3b469f8bbdf1d3afc6199fbc56f}\label{integration__test_8cpp_a58ace3b469f8bbdf1d3afc6199fbc56f}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/8]}}
+{\footnotesize\ttfamily TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drop_test}{Drop\+Test}}}]{,  }\item[{Check\+Free\+Fall}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program simulates free fall correctly. 
+
+\mbox{\Hypertarget{integration__test_8cpp_a5403970259ce94205efe8a85535828f3}\label{integration__test_8cpp_a5403970259ce94205efe8a85535828f3}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/8]}}
+{\footnotesize\ttfamily TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drop_test}{Drop\+Test}}}]{,  }\item[{Force\+Influence}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program simulates outer forces influence correctly. 
+
+\mbox{\Hypertarget{integration__test_8cpp_ad49f160bbb1bbe07b00979664069ba6f}\label{integration__test_8cpp_ad49f160bbb1bbe07b00979664069ba6f}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/8]}}
+{\footnotesize\ttfamily TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drop_test}{Drop\+Test}}}]{,  }\item[{Like\+Parachute}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program simulates air drag correctly. 
+
+\mbox{\Hypertarget{integration__test_8cpp_a5795742996b26546ab818239079b5a8d}\label{integration__test_8cpp_a5795742996b26546ab818239079b5a8d}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/8]}}
+{\footnotesize\ttfamily TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drop_test}{Drop\+Test}}}]{,  }\item[{Program\+Runs\+And\+Exits\+Correctly}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program run and exit on command correctly. 
+
+\mbox{\Hypertarget{integration__test_8cpp_a241d96154452ec0bde74fc2fc343559a}\label{integration__test_8cpp_a241d96154452ec0bde74fc2fc343559a}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/8]}}
+{\footnotesize\ttfamily TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drop_test}{Drop\+Test}}}]{,  }\item[{Program\+Runs\+And\+Send\+State}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program run send valid state. 
+
+\mbox{\Hypertarget{integration__test_8cpp_a233a7964f2ac3d7fb45c0fdc1abd4b7e}\label{integration__test_8cpp_a233a7964f2ac3d7fb45c0fdc1abd4b7e}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/8]}}
+{\footnotesize\ttfamily TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drop_test}{Drop\+Test}}}]{,  }\item[{Solid\+Surface\+Collision}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program simulates solid surface collision correctly. 
+
+\mbox{\Hypertarget{integration__test_8cpp_a50ee0968e5a2b19586d08ad2550df34f}\label{integration__test_8cpp_a50ee0968e5a2b19586d08ad2550df34f}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/8]}}
+{\footnotesize\ttfamily TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drop_test}{Drop\+Test}}}]{,  }\item[{Strong\+Wind\+Influence}]{ }\end{DoxyParamCaption})}
+
+
+
+Test if program simulates strong wind influence correctly. 
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{integration__test_8cpp_a430b66fe7c84cf79717339fb8d7a1af2}\label{integration__test_8cpp_a430b66fe7c84cf79717339fb8d7a1af2}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!communicationFolder@{communicationFolder}}
+\index{communicationFolder@{communicationFolder}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{communicationFolder}{communicationFolder}}
+{\footnotesize\ttfamily const std\+::string communication\+Folder = \char`\"{}ipc\+:///tmp/drop\+\_\+shot\char`\"{}}
+
+\mbox{\Hypertarget{integration__test_8cpp_a39c9ace302ba1ab8525b04836fe76174}\label{integration__test_8cpp_a39c9ace302ba1ab8525b04836fe76174}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!ctx@{ctx}}
+\index{ctx@{ctx}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{ctx}{ctx}}
+{\footnotesize\ttfamily zmq\+::context\+\_\+t ctx}
+
+\mbox{\Hypertarget{integration__test_8cpp_ac9bbe9b38aa7abf183276b16febc28a5}\label{integration__test_8cpp_ac9bbe9b38aa7abf183276b16febc28a5}} 
+\index{integration\_test.cpp@{integration\_test.cpp}!programPath@{programPath}}
+\index{programPath@{programPath}!integration\_test.cpp@{integration\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{programPath}{programPath}}
+{\footnotesize\ttfamily const std\+::string program\+Path = \char`\"{}./drop\char`\"{}}
+

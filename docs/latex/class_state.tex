@@ -1,0 +1,317 @@
+\hypertarget{class_state}{}\doxysection{State Class Reference}
+\label{class_state}\index{State@{State}}
+
+
+{\ttfamily \#include $<$state.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_state_ab91bb1dd5aa6260ab2a456581daf9ec2}{State}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{class_state_ac5b125aa34c4f0775ff519f67d718e1f}{get\+State}} ()
+\begin{DoxyCompactList}\small\item\em Get full state as vector. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_state_a875fe3df7672f9bd09bd2da7e3a4919c}{update\+State}} (Eigen\+::\+Vector\+Xd new\+State)
+\begin{DoxyCompactList}\small\item\em Update state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_state_a0abd53f1d960ea51f64a07572b000fe3}{update\+Wind}} (int id, Eigen\+::\+Vector3d new\+Wind)
+\begin{DoxyCompactList}\small\item\em update wind speed for obj specified by id \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_state_a79864301577aa0d265e4aaf517558352}{update\+Force}} (int id, Eigen\+::\+Vector3d new\+Force)
+\begin{DoxyCompactList}\small\item\em update outer force applied to object specified by id \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_state_ade355c27ed0a9dba8f1cbd21bfbfd7e7}{add\+Obj}} (double mass, double CS\+\_\+coff, Eigen\+::\+Vector3d pos, Eigen\+::\+Vector3d vel=Eigen\+::\+Vector3d())
+\begin{DoxyCompactList}\small\item\em Add new object to simulation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_state_ae260c9a13ea6a13016e9f0a98abc0191}{remove\+Obj}} (int id)
+\begin{DoxyCompactList}\small\item\em remove object specified by id \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_state_aa59dfb1f0f79dcdf739ae549b53b33b8}{to\+\_\+string}} ()
+\begin{DoxyCompactList}\small\item\em Serialize state to string. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_state_a86ac7af3c51f7bf820caf9cf690d15fe}{find\+Index}} (int id)
+\begin{DoxyCompactList}\small\item\em Find index of object specified by id. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_state_a89063062d31c19b07373a766cc323987}{get\+No\+Obj}} ()
+\begin{DoxyCompactList}\small\item\em Get number of active object in simulation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_obj_params}{Obj\+Params}} $\ast$ \mbox{\hyperlink{class_state_ab9a16e2c92b72f994265df69f8633f8e}{get\+Params}} (int index)
+\begin{DoxyCompactList}\small\item\em get params of object specified by index \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_state_a214dacebba2f85d2931a1eb0aaedb867}{get\+Pos}} (int index)
+\begin{DoxyCompactList}\small\item\em Get position of object specified by index. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_state_afc4914582f564c6aa48d1c6f4b3e8162}{get\+Vel}} (int index)
+\begin{DoxyCompactList}\small\item\em Get velocity of object specified by index. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_state_ae4ea35621d8d01ac10ac379ebdc35f24}{set\+Vel}} (int index, Eigen\+::\+Vector3d new\+Vel)
+\begin{DoxyCompactList}\small\item\em Override velocity of object, for example after collision. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::mutex \mbox{\hyperlink{class_state_a5cb0e1e87ffdbc0317ae28b07d93b6f9}{state\+Mutex}}
+\begin{DoxyCompactList}\small\item\em mutex to manipule on state responses \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_state_a8ef2d6346d72ac9ef2f9d0b95823bc59}{real\+\_\+time}}
+\begin{DoxyCompactList}\small\item\em time of simulation \end{DoxyCompactList}\item 
+Status \mbox{\hyperlink{class_state_a016b2a22521090b9ae32a4a720062f72}{status}}
+\begin{DoxyCompactList}\small\item\em status for timed loop \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_state_ab91bb1dd5aa6260ab2a456581daf9ec2}\label{class_state_ab91bb1dd5aa6260ab2a456581daf9ec2}} 
+\index{State@{State}!State@{State}}
+\index{State@{State}!State@{State}}
+\doxysubsubsection{\texorpdfstring{State()}{State()}}
+{\footnotesize\ttfamily State\+::\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_state_ade355c27ed0a9dba8f1cbd21bfbfd7e7}\label{class_state_ade355c27ed0a9dba8f1cbd21bfbfd7e7}} 
+\index{State@{State}!addObj@{addObj}}
+\index{addObj@{addObj}!State@{State}}
+\doxysubsubsection{\texorpdfstring{addObj()}{addObj()}}
+{\footnotesize\ttfamily int State\+::add\+Obj (\begin{DoxyParamCaption}\item[{double}]{mass,  }\item[{double}]{CS\+\_\+coff,  }\item[{Eigen\+::\+Vector3d}]{pos,  }\item[{Eigen\+::\+Vector3d}]{vel = {\ttfamily Eigen\+:\+:Vector3d()} }\end{DoxyParamCaption})}
+
+
+
+Add new object to simulation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mass} & mass of object \\
+\hline
+{\em CS\+\_\+coff} & aerodynamic drag force cofficent multipled by aerodynamic field \\
+\hline
+{\em pos} & start position \\
+\hline
+{\em vel} & start velocity \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+id of added object 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_state_a86ac7af3c51f7bf820caf9cf690d15fe}\label{class_state_a86ac7af3c51f7bf820caf9cf690d15fe}} 
+\index{State@{State}!findIndex@{findIndex}}
+\index{findIndex@{findIndex}!State@{State}}
+\doxysubsubsection{\texorpdfstring{findIndex()}{findIndex()}}
+{\footnotesize\ttfamily int State\+::find\+Index (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+Find index of object specified by id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & object id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+object index 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_state_a89063062d31c19b07373a766cc323987}\label{class_state_a89063062d31c19b07373a766cc323987}} 
+\index{State@{State}!getNoObj@{getNoObj}}
+\index{getNoObj@{getNoObj}!State@{State}}
+\doxysubsubsection{\texorpdfstring{getNoObj()}{getNoObj()}}
+{\footnotesize\ttfamily int State\+::get\+No\+Obj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get number of active object in simulation. 
+
+\begin{DoxyReturn}{Returns}
+number of object 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_state_ab9a16e2c92b72f994265df69f8633f8e}\label{class_state_ab9a16e2c92b72f994265df69f8633f8e}} 
+\index{State@{State}!getParams@{getParams}}
+\index{getParams@{getParams}!State@{State}}
+\doxysubsubsection{\texorpdfstring{getParams()}{getParams()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_obj_params}{Obj\+Params}}$\ast$ State\+::get\+Params (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+get params of object specified by index 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index of object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to object params 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_state_a214dacebba2f85d2931a1eb0aaedb867}\label{class_state_a214dacebba2f85d2931a1eb0aaedb867}} 
+\index{State@{State}!getPos@{getPos}}
+\index{getPos@{getPos}!State@{State}}
+\doxysubsubsection{\texorpdfstring{getPos()}{getPos()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d State\+::get\+Pos (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get position of object specified by index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index of object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+position vector 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_state_ac5b125aa34c4f0775ff519f67d718e1f}\label{class_state_ac5b125aa34c4f0775ff519f67d718e1f}} 
+\index{State@{State}!getState@{getState}}
+\index{getState@{getState}!State@{State}}
+\doxysubsubsection{\texorpdfstring{getState()}{getState()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd State\+::get\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get full state as vector. 
+
+\begin{DoxyReturn}{Returns}
+state vector 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_state_afc4914582f564c6aa48d1c6f4b3e8162}\label{class_state_afc4914582f564c6aa48d1c6f4b3e8162}} 
+\index{State@{State}!getVel@{getVel}}
+\index{getVel@{getVel}!State@{State}}
+\doxysubsubsection{\texorpdfstring{getVel()}{getVel()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d State\+::get\+Vel (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get velocity of object specified by index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index of object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+velocity of object 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_state_ae260c9a13ea6a13016e9f0a98abc0191}\label{class_state_ae260c9a13ea6a13016e9f0a98abc0191}} 
+\index{State@{State}!removeObj@{removeObj}}
+\index{removeObj@{removeObj}!State@{State}}
+\doxysubsubsection{\texorpdfstring{removeObj()}{removeObj()}}
+{\footnotesize\ttfamily void State\+::remove\+Obj (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+remove object specified by id 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id of removing object \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_state_ae4ea35621d8d01ac10ac379ebdc35f24}\label{class_state_ae4ea35621d8d01ac10ac379ebdc35f24}} 
+\index{State@{State}!setVel@{setVel}}
+\index{setVel@{setVel}!State@{State}}
+\doxysubsubsection{\texorpdfstring{setVel()}{setVel()}}
+{\footnotesize\ttfamily void State\+::set\+Vel (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{Eigen\+::\+Vector3d}]{new\+Vel }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Override velocity of object, for example after collision. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index of object \\
+\hline
+{\em new\+Vel} & new velocity vector \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_state_aa59dfb1f0f79dcdf739ae549b53b33b8}\label{class_state_aa59dfb1f0f79dcdf739ae549b53b33b8}} 
+\index{State@{State}!to\_string@{to\_string}}
+\index{to\_string@{to\_string}!State@{State}}
+\doxysubsubsection{\texorpdfstring{to\_string()}{to\_string()}}
+{\footnotesize\ttfamily std\+::string State\+::to\+\_\+string (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Serialize state to string. 
+
+\begin{DoxyReturn}{Returns}
+serialized state 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_state_a79864301577aa0d265e4aaf517558352}\label{class_state_a79864301577aa0d265e4aaf517558352}} 
+\index{State@{State}!updateForce@{updateForce}}
+\index{updateForce@{updateForce}!State@{State}}
+\doxysubsubsection{\texorpdfstring{updateForce()}{updateForce()}}
+{\footnotesize\ttfamily void State\+::update\+Force (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{Eigen\+::\+Vector3d}]{new\+Force }\end{DoxyParamCaption})}
+
+
+
+update outer force applied to object specified by id 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id of updated obj \\
+\hline
+{\em new\+Force} & new force value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_state_a875fe3df7672f9bd09bd2da7e3a4919c}\label{class_state_a875fe3df7672f9bd09bd2da7e3a4919c}} 
+\index{State@{State}!updateState@{updateState}}
+\index{updateState@{updateState}!State@{State}}
+\doxysubsubsection{\texorpdfstring{updateState()}{updateState()}}
+{\footnotesize\ttfamily void State\+::update\+State (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd}]{new\+State }\end{DoxyParamCaption})}
+
+
+
+Update state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+State} & new state vector \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_state_a0abd53f1d960ea51f64a07572b000fe3}\label{class_state_a0abd53f1d960ea51f64a07572b000fe3}} 
+\index{State@{State}!updateWind@{updateWind}}
+\index{updateWind@{updateWind}!State@{State}}
+\doxysubsubsection{\texorpdfstring{updateWind()}{updateWind()}}
+{\footnotesize\ttfamily void State\+::update\+Wind (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{Eigen\+::\+Vector3d}]{new\+Wind }\end{DoxyParamCaption})}
+
+
+
+update wind speed for obj specified by id 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id of updated obj \\
+\hline
+{\em new\+Wind} & new wind speed vector \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_state_a8ef2d6346d72ac9ef2f9d0b95823bc59}\label{class_state_a8ef2d6346d72ac9ef2f9d0b95823bc59}} 
+\index{State@{State}!real\_time@{real\_time}}
+\index{real\_time@{real\_time}!State@{State}}
+\doxysubsubsection{\texorpdfstring{real\_time}{real\_time}}
+{\footnotesize\ttfamily double State\+::real\+\_\+time}
+
+
+
+time of simulation 
+
+\mbox{\Hypertarget{class_state_a5cb0e1e87ffdbc0317ae28b07d93b6f9}\label{class_state_a5cb0e1e87ffdbc0317ae28b07d93b6f9}} 
+\index{State@{State}!stateMutex@{stateMutex}}
+\index{stateMutex@{stateMutex}!State@{State}}
+\doxysubsubsection{\texorpdfstring{stateMutex}{stateMutex}}
+{\footnotesize\ttfamily std\+::mutex State\+::state\+Mutex}
+
+
+
+mutex to manipule on state responses 
+
+\mbox{\Hypertarget{class_state_a016b2a22521090b9ae32a4a720062f72}\label{class_state_a016b2a22521090b9ae32a4a720062f72}} 
+\index{State@{State}!status@{status}}
+\index{status@{status}!State@{State}}
+\doxysubsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily Status State\+::status}
+
+
+
+status for timed loop 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{state_8hpp}{state.\+hpp}}\item 
+src/\mbox{\hyperlink{state_8cpp}{state.\+cpp}}\end{DoxyCompactItemize}

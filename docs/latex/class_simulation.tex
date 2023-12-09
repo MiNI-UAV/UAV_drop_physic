@@ -1,0 +1,206 @@
+\hypertarget{class_simulation}{}\doxysection{Simulation Class Reference}
+\label{class_simulation}\index{Simulation@{Simulation}}
+
+
+{\ttfamily \#include $<$simulation.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_simulation_abe2457164849f339e66cb6dbcac55e29}{Simulation}} (const \mbox{\hyperlink{class_params}{Params}} \&params)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_simulation_a80fad3f57dfaf195a36f7bc49bc88279}{$\sim$\+Simulation}} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_ae5c367f87c0b5dc9740bc6d00e44e72c}{run}} ()
+\begin{DoxyCompactList}\small\item\em Run simulation. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_simulation_a6cf6a49e9512cb277d85f416803a0f4b}{add\+Obj}} (double mass, double CS, Eigen\+::\+Vector3d pos, Eigen\+::\+Vector3d vel=Eigen\+::\+Vector3d())
+\begin{DoxyCompactList}\small\item\em Add new object to simulation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_a7443010e97323d8b1565388e3bbca18b}{remove\+Obj}} (int id)
+\begin{DoxyCompactList}\small\item\em Remove object from simulation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_a157d5786d2333b202d5b1b88aa82b546}{add\+Command}} (std\+::string msg, zmq\+::socket\+\_\+t \&sock)
+\begin{DoxyCompactList}\small\item\em Handle add new object command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_a3ad16e466dd64b338acec30a7c09d571}{update\+Wind}} (std\+::string msg, zmq\+::socket\+\_\+t \&sock)
+\begin{DoxyCompactList}\small\item\em Handle update wind command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_ab6419c1cd8efde6b8780a94597e13c57}{update\+Force}} (std\+::string msg, zmq\+::socket\+\_\+t \&sock)
+\begin{DoxyCompactList}\small\item\em Handle update force command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_ae2bf103588811f16de14b5028c4a3ddc}{solid\+Surf\+Colision}} (std\+::string \&msg\+\_\+str, zmq\+::socket\+\_\+t \&sock)
+\begin{DoxyCompactList}\small\item\em Handle solid surface collision command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_ac0b41e6dc5b6f63a2e4731e184850296}{calc\+Impulse\+Force}} (int id, double COR, double mi\+\_\+static, double mi\+\_\+dynamic, Eigen\+::\+Vector3d surface\+Normal)
+\begin{DoxyCompactList}\small\item\em Calculates object state after collision with given surface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_simulation_abe2457164849f339e66cb6dbcac55e29}\label{class_simulation_abe2457164849f339e66cb6dbcac55e29}} 
+\index{Simulation@{Simulation}!Simulation@{Simulation}}
+\index{Simulation@{Simulation}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{Simulation()}{Simulation()}}
+{\footnotesize\ttfamily Simulation\+::\+Simulation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_params}{Params}} \&}]{params }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & simulation params \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_a80fad3f57dfaf195a36f7bc49bc88279}\label{class_simulation_a80fad3f57dfaf195a36f7bc49bc88279}} 
+\index{Simulation@{Simulation}!````~Simulation@{$\sim$Simulation}}
+\index{````~Simulation@{$\sim$Simulation}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{$\sim$Simulation()}{~Simulation()}}
+{\footnotesize\ttfamily Simulation\+::$\sim$\+Simulation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_simulation_a157d5786d2333b202d5b1b88aa82b546}\label{class_simulation_a157d5786d2333b202d5b1b88aa82b546}} 
+\index{Simulation@{Simulation}!addCommand@{addCommand}}
+\index{addCommand@{addCommand}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{addCommand()}{addCommand()}}
+{\footnotesize\ttfamily void Simulation\+::add\+Command (\begin{DoxyParamCaption}\item[{std\+::string}]{msg,  }\item[{zmq\+::socket\+\_\+t \&}]{sock }\end{DoxyParamCaption})}
+
+
+
+Handle add new object command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & message content \\
+\hline
+{\em sock} & zmq socket reply is send by \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_a6cf6a49e9512cb277d85f416803a0f4b}\label{class_simulation_a6cf6a49e9512cb277d85f416803a0f4b}} 
+\index{Simulation@{Simulation}!addObj@{addObj}}
+\index{addObj@{addObj}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{addObj()}{addObj()}}
+{\footnotesize\ttfamily int Simulation\+::add\+Obj (\begin{DoxyParamCaption}\item[{double}]{mass,  }\item[{double}]{CS,  }\item[{Eigen\+::\+Vector3d}]{pos,  }\item[{Eigen\+::\+Vector3d}]{vel = {\ttfamily Eigen\+:\+:Vector3d()} }\end{DoxyParamCaption})}
+
+
+
+Add new object to simulation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mass} & obj mass \\
+\hline
+{\em CS} & aerodynamic drag force cofficent multipled by aerodynamic field \\
+\hline
+{\em pos} & start position of object \\
+\hline
+{\em vel} & start velocity of object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+id of added object 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_simulation_ac0b41e6dc5b6f63a2e4731e184850296}\label{class_simulation_ac0b41e6dc5b6f63a2e4731e184850296}} 
+\index{Simulation@{Simulation}!calcImpulseForce@{calcImpulseForce}}
+\index{calcImpulseForce@{calcImpulseForce}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{calcImpulseForce()}{calcImpulseForce()}}
+{\footnotesize\ttfamily void Simulation\+::calc\+Impulse\+Force (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{double}]{COR,  }\item[{double}]{mi\+\_\+static,  }\item[{double}]{mi\+\_\+dynamic,  }\item[{Eigen\+::\+Vector3d}]{surface\+Normal }\end{DoxyParamCaption})}
+
+
+
+Calculates object state after collision with given surface. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & object id \\
+\hline
+{\em COR} & coefficient of restitution. e = 0 is perfect inelastic collision, e = 1 is perfect elastic collision. 0 $<$ e $<$ 1 is a real-\/world inelastic collision, in which some kinetic energy is dissipated. \\
+\hline
+{\em mi\+\_\+static} & static friction cofficient \\
+\hline
+{\em mi\+\_\+dynamic} & dynamic friction cofficient \\
+\hline
+{\em surface\+Normal} & surface normal vector \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_a7443010e97323d8b1565388e3bbca18b}\label{class_simulation_a7443010e97323d8b1565388e3bbca18b}} 
+\index{Simulation@{Simulation}!removeObj@{removeObj}}
+\index{removeObj@{removeObj}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{removeObj()}{removeObj()}}
+{\footnotesize\ttfamily void Simulation\+::remove\+Obj (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+Remove object from simulation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & object id \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_ae5c367f87c0b5dc9740bc6d00e44e72c}\label{class_simulation_ae5c367f87c0b5dc9740bc6d00e44e72c}} 
+\index{Simulation@{Simulation}!run@{run}}
+\index{run@{run}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Simulation\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Run simulation. 
+
+\mbox{\Hypertarget{class_simulation_ae2bf103588811f16de14b5028c4a3ddc}\label{class_simulation_ae2bf103588811f16de14b5028c4a3ddc}} 
+\index{Simulation@{Simulation}!solidSurfColision@{solidSurfColision}}
+\index{solidSurfColision@{solidSurfColision}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{solidSurfColision()}{solidSurfColision()}}
+{\footnotesize\ttfamily void Simulation\+::solid\+Surf\+Colision (\begin{DoxyParamCaption}\item[{std\+::string \&}]{msg\+\_\+str,  }\item[{zmq\+::socket\+\_\+t \&}]{sock }\end{DoxyParamCaption})}
+
+
+
+Handle solid surface collision command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & message content \\
+\hline
+{\em sock} & zmq socket reply is send by \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_ab6419c1cd8efde6b8780a94597e13c57}\label{class_simulation_ab6419c1cd8efde6b8780a94597e13c57}} 
+\index{Simulation@{Simulation}!updateForce@{updateForce}}
+\index{updateForce@{updateForce}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{updateForce()}{updateForce()}}
+{\footnotesize\ttfamily void Simulation\+::update\+Force (\begin{DoxyParamCaption}\item[{std\+::string}]{msg,  }\item[{zmq\+::socket\+\_\+t \&}]{sock }\end{DoxyParamCaption})}
+
+
+
+Handle update force command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & message content \\
+\hline
+{\em sock} & zmq socket reply is send by \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_a3ad16e466dd64b338acec30a7c09d571}\label{class_simulation_a3ad16e466dd64b338acec30a7c09d571}} 
+\index{Simulation@{Simulation}!updateWind@{updateWind}}
+\index{updateWind@{updateWind}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{updateWind()}{updateWind()}}
+{\footnotesize\ttfamily void Simulation\+::update\+Wind (\begin{DoxyParamCaption}\item[{std\+::string}]{msg,  }\item[{zmq\+::socket\+\_\+t \&}]{sock }\end{DoxyParamCaption})}
+
+
+
+Handle update wind command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & message content \\
+\hline
+{\em sock} & zmq socket reply is send by \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{simulation_8hpp}{simulation.\+hpp}}\item 
+src/\mbox{\hyperlink{simulation_8cpp}{simulation.\+cpp}}\end{DoxyCompactItemize}

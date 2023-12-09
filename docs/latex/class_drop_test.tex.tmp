@@ -1,0 +1,69 @@
+\hypertarget{class_drop_test}{}\doxysection{Drop\+Test Class Reference}
+\label{class_drop_test}\index{DropTest@{DropTest}}
+
+
+Inheritance diagram for Drop\+Test\+:
+% FIG 0
+
+
+Collaboration diagram for Drop\+Test\+:
+% FIG 1
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_drop_test_a759056be9482fb4c8105fdc2a18458a4}{Set\+Up}} () override
+\item 
+void \mbox{\hyperlink{class_drop_test_a4995df6446d133dfa3ff1841eb784eff}{Tear\+Down}} () override
+\item 
+void \mbox{\hyperlink{class_drop_test_ae1672cb85d4be73fa790a0e70b906dfd}{send\+Control\+Message}} (std\+::string msg, bool should\+\_\+response=true, bool should\+\_\+response\+\_\+ok=true)
+\item 
+int \mbox{\hyperlink{class_drop_test_a23cc4b3f90fe9213555854b0e81f45b5}{recv\+State}} (std\+::string \&response\+\_\+str)
+\item 
+auto \mbox{\hyperlink{class_drop_test_ae5d4db9bb7e5e5b8e44ba1df0863ec20}{get\+Parsed\+State}} ()
+\item 
+void \mbox{\hyperlink{class_drop_test_ab07ecfbee52841bbf52d8a1422f27e42}{collect\+Sample}} (const int N=10)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_drop_test_ab07ecfbee52841bbf52d8a1422f27e42}\label{class_drop_test_ab07ecfbee52841bbf52d8a1422f27e42}} 
+\index{DropTest@{DropTest}!collectSample@{collectSample}}
+\index{collectSample@{collectSample}!DropTest@{DropTest}}
+\doxysubsubsection{\texorpdfstring{collectSample()}{collectSample()}}
+{\footnotesize\ttfamily void Drop\+Test\+::collect\+Sample (\begin{DoxyParamCaption}\item[{const int}]{N = {\ttfamily 10} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_drop_test_ae5d4db9bb7e5e5b8e44ba1df0863ec20}\label{class_drop_test_ae5d4db9bb7e5e5b8e44ba1df0863ec20}} 
+\index{DropTest@{DropTest}!getParsedState@{getParsedState}}
+\index{getParsedState@{getParsedState}!DropTest@{DropTest}}
+\doxysubsubsection{\texorpdfstring{getParsedState()}{getParsedState()}}
+{\footnotesize\ttfamily auto Drop\+Test\+::get\+Parsed\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_drop_test_a23cc4b3f90fe9213555854b0e81f45b5}\label{class_drop_test_a23cc4b3f90fe9213555854b0e81f45b5}} 
+\index{DropTest@{DropTest}!recvState@{recvState}}
+\index{recvState@{recvState}!DropTest@{DropTest}}
+\doxysubsubsection{\texorpdfstring{recvState()}{recvState()}}
+{\footnotesize\ttfamily int Drop\+Test\+::recv\+State (\begin{DoxyParamCaption}\item[{std\+::string \&}]{response\+\_\+str }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_drop_test_ae1672cb85d4be73fa790a0e70b906dfd}\label{class_drop_test_ae1672cb85d4be73fa790a0e70b906dfd}} 
+\index{DropTest@{DropTest}!sendControlMessage@{sendControlMessage}}
+\index{sendControlMessage@{sendControlMessage}!DropTest@{DropTest}}
+\doxysubsubsection{\texorpdfstring{sendControlMessage()}{sendControlMessage()}}
+{\footnotesize\ttfamily void Drop\+Test\+::send\+Control\+Message (\begin{DoxyParamCaption}\item[{std\+::string}]{msg,  }\item[{bool}]{should\+\_\+response = {\ttfamily true},  }\item[{bool}]{should\+\_\+response\+\_\+ok = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_drop_test_a759056be9482fb4c8105fdc2a18458a4}\label{class_drop_test_a759056be9482fb4c8105fdc2a18458a4}} 
+\index{DropTest@{DropTest}!SetUp@{SetUp}}
+\index{SetUp@{SetUp}!DropTest@{DropTest}}
+\doxysubsubsection{\texorpdfstring{SetUp()}{SetUp()}}
+{\footnotesize\ttfamily void Drop\+Test\+::\+Set\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_drop_test_a4995df6446d133dfa3ff1841eb784eff}\label{class_drop_test_a4995df6446d133dfa3ff1841eb784eff}} 
+\index{DropTest@{DropTest}!TearDown@{TearDown}}
+\index{TearDown@{TearDown}!DropTest@{DropTest}}
+\doxysubsubsection{\texorpdfstring{TearDown()}{TearDown()}}
+{\footnotesize\ttfamily void Drop\+Test\+::\+Tear\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+tests/\mbox{\hyperlink{integration__test_8cpp}{integration\+\_\+test.\+cpp}}\end{DoxyCompactItemize}

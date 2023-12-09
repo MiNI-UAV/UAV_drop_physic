@@ -1,0 +1,171 @@
+\hypertarget{class_obj_params}{}\doxysection{Obj\+Params Class Reference}
+\label{class_obj_params}\index{ObjParams@{ObjParams}}
+
+
+Single obj parameters.  
+
+
+
+
+{\ttfamily \#include $<$state.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_obj_params_af2b1e50a08e769219a0beb7ea98aa281}{Obj\+Params}} (double \mbox{\hyperlink{class_obj_params_a7787c8c2af60128b2a9f38519a1a1154}{mass}}, double \mbox{\hyperlink{class_obj_params_a2d3611a563f56dc710167fb484f7e2e6}{CS\+\_\+coff}})
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_obj_params_a4d6fbafb76730c4c8879ae5811f8b67b}{Obj\+Params}} (\mbox{\hyperlink{class_obj_params}{Obj\+Params}} \&\&rhs)
+\begin{DoxyCompactList}\small\item\em Moving constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_obj_params_ab58e474c524480c172f3bd839a41d555}{set\+Wind}} (Eigen\+::\+Vector3d new\+Wind)
+\begin{DoxyCompactList}\small\item\em Set wind vector affecting on object. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_obj_params_aaa783f2617b3f67b6f0df27e96a82f51}{get\+Wind}} ()
+\begin{DoxyCompactList}\small\item\em Get wind vector. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_obj_params_a4e52975b6d34957021c7f5b9b73cd8ae}{set\+Force}} (Eigen\+::\+Vector3d new\+Force)
+\begin{DoxyCompactList}\small\item\em Set outer force applied to object. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_obj_params_a2e735be882e4f42f59e43fc969e80833}{get\+Force}} ()
+\begin{DoxyCompactList}\small\item\em Get outer force. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const int \mbox{\hyperlink{class_obj_params_ab2e55e3a97ebd27ab73c9bb6986aa937}{id}}
+\begin{DoxyCompactList}\small\item\em object id \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{class_obj_params_a7787c8c2af60128b2a9f38519a1a1154}{mass}}
+\begin{DoxyCompactList}\small\item\em object mass \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{class_obj_params_a2d3611a563f56dc710167fb484f7e2e6}{CS\+\_\+coff}}
+\begin{DoxyCompactList}\small\item\em aerodynamic drag force cofficent multipled by aerodynamic field \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Single obj parameters. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_obj_params_af2b1e50a08e769219a0beb7ea98aa281}\label{class_obj_params_af2b1e50a08e769219a0beb7ea98aa281}} 
+\index{ObjParams@{ObjParams}!ObjParams@{ObjParams}}
+\index{ObjParams@{ObjParams}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{ObjParams()}{ObjParams()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Obj\+Params\+::\+Obj\+Params (\begin{DoxyParamCaption}\item[{double}]{mass,  }\item[{double}]{CS\+\_\+coff }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mass} & object mass \\
+\hline
+{\em CS\+\_\+coff} & aerodynamic drag force cofficent multipled by aerodynamic field \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_obj_params_a4d6fbafb76730c4c8879ae5811f8b67b}\label{class_obj_params_a4d6fbafb76730c4c8879ae5811f8b67b}} 
+\index{ObjParams@{ObjParams}!ObjParams@{ObjParams}}
+\index{ObjParams@{ObjParams}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{ObjParams()}{ObjParams()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Obj\+Params\+::\+Obj\+Params (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_obj_params}{Obj\+Params}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Moving constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & other instant that should be consumed \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_obj_params_a2e735be882e4f42f59e43fc969e80833}\label{class_obj_params_a2e735be882e4f42f59e43fc969e80833}} 
+\index{ObjParams@{ObjParams}!getForce@{getForce}}
+\index{getForce@{getForce}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{getForce()}{getForce()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Obj\+Params\+::get\+Force (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get outer force. 
+
+\begin{DoxyReturn}{Returns}
+outer force vector in N 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_obj_params_aaa783f2617b3f67b6f0df27e96a82f51}\label{class_obj_params_aaa783f2617b3f67b6f0df27e96a82f51}} 
+\index{ObjParams@{ObjParams}!getWind@{getWind}}
+\index{getWind@{getWind}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{getWind()}{getWind()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Obj\+Params\+::get\+Wind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get wind vector. 
+
+\begin{DoxyReturn}{Returns}
+wind speed vector in m/s 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_obj_params_a4e52975b6d34957021c7f5b9b73cd8ae}\label{class_obj_params_a4e52975b6d34957021c7f5b9b73cd8ae}} 
+\index{ObjParams@{ObjParams}!setForce@{setForce}}
+\index{setForce@{setForce}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{setForce()}{setForce()}}
+{\footnotesize\ttfamily void Obj\+Params\+::set\+Force (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{new\+Force }\end{DoxyParamCaption})}
+
+
+
+Set outer force applied to object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Force} & new force vector in N \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_obj_params_ab58e474c524480c172f3bd839a41d555}\label{class_obj_params_ab58e474c524480c172f3bd839a41d555}} 
+\index{ObjParams@{ObjParams}!setWind@{setWind}}
+\index{setWind@{setWind}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{setWind()}{setWind()}}
+{\footnotesize\ttfamily void Obj\+Params\+::set\+Wind (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{new\+Wind }\end{DoxyParamCaption})}
+
+
+
+Set wind vector affecting on object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Wind} & new wind speed vector in m/s \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_obj_params_a2d3611a563f56dc710167fb484f7e2e6}\label{class_obj_params_a2d3611a563f56dc710167fb484f7e2e6}} 
+\index{ObjParams@{ObjParams}!CS\_coff@{CS\_coff}}
+\index{CS\_coff@{CS\_coff}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{CS\_coff}{CS\_coff}}
+{\footnotesize\ttfamily const double Obj\+Params\+::\+CS\+\_\+coff}
+
+
+
+aerodynamic drag force cofficent multipled by aerodynamic field 
+
+\mbox{\Hypertarget{class_obj_params_ab2e55e3a97ebd27ab73c9bb6986aa937}\label{class_obj_params_ab2e55e3a97ebd27ab73c9bb6986aa937}} 
+\index{ObjParams@{ObjParams}!id@{id}}
+\index{id@{id}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily const int Obj\+Params\+::id}
+
+
+
+object id 
+
+\mbox{\Hypertarget{class_obj_params_a7787c8c2af60128b2a9f38519a1a1154}\label{class_obj_params_a7787c8c2af60128b2a9f38519a1a1154}} 
+\index{ObjParams@{ObjParams}!mass@{mass}}
+\index{mass@{mass}!ObjParams@{ObjParams}}
+\doxysubsubsection{\texorpdfstring{mass}{mass}}
+{\footnotesize\ttfamily const double Obj\+Params\+::mass}
+
+
+
+object mass 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{state_8hpp}{state.\+hpp}}\item 
+src/\mbox{\hyperlink{state_8cpp}{state.\+cpp}}\end{DoxyCompactItemize}
